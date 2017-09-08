@@ -158,7 +158,20 @@ class Swiper extends React.Component {
     )
   }
 
+  onSwipeStart = () => {
+    if (this.props.onSwipeStart) {
+      this.props.onSwipeStart();
+    }
+  }
+
+  onSwipeStop = () => {
+    if (this.props.onSwipeStop) {
+      this.props.onSwipeStop();
+    }
+  }
+
   onPanResponderGrant = (event, gestureState) => {
+    this.onSwipeStart();
     if (!this.state.panResponderLocked) {
       this.state.pan.setOffset({
         x: this._animatedValueX,
@@ -196,6 +209,7 @@ class Swiper extends React.Component {
   }
 
   onPanResponderRelease = (e, gestureState) => {
+    this.onSwipeStop();
     if (this.state.panResponderLocked) {
       this.state.pan.setValue({
         x: 0,
