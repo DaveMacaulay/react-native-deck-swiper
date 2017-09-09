@@ -108,8 +108,10 @@ class Swiper extends React.Component {
 
   initializePanResponder = () => {
     this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (event, gestureState) => true,
-      onMoveShouldSetPanResponder: (event, gestureState) => false,
+      onPanResponderTerminationRequest: () => false,
+      onStartShouldSetPanResponderCapture: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => false,
 
       onMoveShouldSetPanResponderCapture: (evt, gestureState) =>
         Math.sqrt(Math.pow(gestureState.dx, 2) + Math.pow(gestureState.dy, 2)) > 10,
@@ -796,6 +798,8 @@ Swiper.propTypes = {
   onSwipedRight: PropTypes.func,
   onSwipedTop: PropTypes.func,
   onTapCard: PropTypes.func,
+  onSwipeStart: PropTypes.func,
+  onSwipeStop: PropTypes.func,
   outputCardOpacityRangeX: PropTypes.array,
   outputCardOpacityRangeY: PropTypes.array,
   outputOverlayLabelsOpacityRangeX: PropTypes.array,
